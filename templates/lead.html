@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RE:LEAD | Lead Intelligence</title>
+
+    <link rel="stylesheet" href="/static/relead.css">
+
+    <style>
+
+        .lead-page {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #6c4df6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .lead-header,
+        .info-card,
+        .ask-card,
+        .answer-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .lead-header h1 {
+            margin-bottom: 5px;
+        }
+
+        .lead-header p {
+            color: #777;
+        }
+
+        .lead-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-card h2,
+        .ask-card h2,
+        .answer-card h2 {
+            margin-top: 0;
+        }
+
+        .info-row {
+            margin-bottom: 16px;
+        }
+
+        .info-row label {
+            display: block;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .memory-banner {
+            background: linear-gradient(135deg, #171323, #302452);
+            color: white;
+            padding: 28px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+        }
+
+        .memory-banner p {
+            color: #ddd;
+        }
+
+        .ask-card textarea {
+            width: 100%;
+            min-height: 110px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-family: inherit;
+            margin: 10px 0 15px;
+        }
+
+        .ask-button {
+            background: #6c4df6;
+            color: white;
+            border: none;
+            padding: 13px 22px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .answer {
+            white-space: pre-wrap;
+            line-height: 1.7;
+        }
+
+        .memory-item {
+            background: #f5f2ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        @media(max-width: 800px) {
+
+            .lead-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                R
+            </div>
+
+            <div>
+
+                <h2>RE:LEAD</h2>
+
+                <span>Sales Memory Agent</span>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="/">
+                📊 Dashboard
+            </a>
+
+            <a href="/#customers">
+                👥 Leads
+            </a>
+
+            <a href="/#add">
+                ➕ Add Lead
+            </a>
+
+            <a href="/#recovery">
+                🧠 Learning
+            </a>
+
+        </nav>
+
+
+        <div class="ai-card">
+
+            <div class="ai-icon">
+                ✦
+            </div>
+
+            <h3>
+                RE:LEAD AI
+            </h3>
+
+            <p>
+                Learn from past leads and recommend what to do next.
+            </p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="lead-page">
+
+            <a href="/" class="back-link">
+                ← Back to Dashboard
+            </a>
+
+
+            <!-- LEAD -->
+
+            <div class="lead-header">
+
+                <h1>
+                    {{ customer['name'] }}
+                </h1>
+
+                <p>
+                    {{ customer['company'] or 'Company not provided' }}
+                    ·
+                    {{ customer['service'] or 'Service not specified' }}
+                </p>
+
+            </div>
+
+
+            <!-- INFORMATION -->
+
+            <div class="lead-grid">
+
+                <div class="info-card">
+
+                    <h2>
+                        👤 Lead Information
+                    </h2>
+
+                    <div class="info-row">
+                        <label>Name</label>
+                        <strong>{{ customer['name'] }}</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <label>Phone</label>
+                        <strong>{{ customer['phone'] }}</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <label>Company</label>
+                        <strong>{{ customer['company'] or '-' }}</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <label>Service</label>
+                        <strong>{{ customer['service'] or '-' }}</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <label>Requirement</label>
+                        <strong>{{ customer['requirement'] or '-' }}</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <h2>
+                        📋 Sales Context
+                    </h2>
+
+                    <div class="info-row">
+                        <label>Budget</label>
+                        <strong>{{ customer['budget'] or '-' }}</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <label>Main Reason</label>
+                        <strong>{{ customer['reason'] or '-' }}</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <label>Objection</label>
+                        <strong>{{ customer['objection'] or '-' }}</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <label>Priority</label>
+                        <strong>{{ customer['priority'] }}</strong>
+                    </div>
+
+                    <div class="info-row">
+                        <label>Notes</label>
+                        <strong>{{ customer['notes'] or '-' }}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MEMORY -->
+
+            <div class="memory-banner">
+
+                <h2>
+                    🧠 RE:LEAD Sales Memory
+                </h2>
+
+                <p>
+                    RE:LEAD uses previous sales experiences
+                    to help the team decide what to do next.
+                </p>
+
+                <strong>
+                    Remember → Recall → Reflect → Recommend
+                </strong>
+
+            </div>
+
+
+            <!-- ASK -->
+
+            <div class="ask-card">
+
+                <h2>
+                    ✨ Ask RE:LEAD
+                </h2>
+
+                <p>
+                    Ask RE:LEAD to analyze this lead using
+                    relevant past sales experiences.
+                </p>
+
+                <form
+                    action="/ask/{{ customer['id'] }}"
+                    method="POST">
+
+                    <textarea
+                        name="question"
+                        placeholder="Example: What should I do with this lead based on similar past customers?"
+                        required>{% if question %}{{ question }}{% endif %}</textarea>
+
+                    <button
+                        type="submit"
+                        class="ask-button">
+
+                        🧠 Ask RE:LEAD
+
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- ANSWER -->
+
+            {% if answer %}
+
+            <div class="answer-card">
+
+                <h2>
+                    💡 RE:LEAD Recommendation
+                </h2>
+
+                <div class="answer">
+                    {{ answer }}
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- MEMORIES -->
+
+            {% if memories %}
+
+            <div class="answer-card">
+
+                <h2>
+                    🔎 Relevant Past Experiences
+                </h2>
+
+                {% for memory in memories %}
+
+                    <div class="memory-item">
+                        {{ memory }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

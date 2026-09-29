@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RE:LEAD | Sales Memory Agent</title>
+
+    <link rel="stylesheet" href="/static/relead.css">
+
+    <style>
+        .lead-name-link {
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .lead-name-link:hover {
+            color: #6c4df6;
+            text-decoration: underline;
+        }
+
+        .view-lead {
+            display: inline-block;
+            margin-right: 8px;
+            padding: 7px 10px;
+            border-radius: 7px;
+            background: #f0edff;
+            color: #6c4df6;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .view-lead:hover {
+            background: #6c4df6;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                R
+            </div>
+
+            <div>
+                <h2>RE:LEAD</h2>
+                <span>Sales Memory Agent</span>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a class="active" href="/">
+                📊 Dashboard
+            </a>
+
+            <a href="#customers">
+                👥 Leads
+            </a>
+
+            <a href="#add">
+                ➕ Add Lead
+            </a>
+
+            <a href="#recovery">
+                🧠 Learning
+            </a>
+
+        </nav>
+
+        <div class="ai-card">
+
+            <div class="ai-icon">
+                ✦
+            </div>
+
+            <h3>
+                RE:LEAD AI
+            </h3>
+
+            <p>
+                Learn from past leads and recommend what to do next.
+            </p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Sales Intelligence Dashboard 👋
+                </h1>
+
+                <p>
+                    Turn past sales experience into better decisions.
+                </p>
+
+            </div>
+
+            <a href="#add" class="primary-btn">
+                + Add New Lead
+            </a>
+
+        </header>
+
+
+        <!-- ================= STATS ================= -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    👥
+                </div>
+
+                <div>
+                    <span>Total Leads</span>
+                    <h2>{{ total }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon red">
+                    ⚠
+                </div>
+
+                <div>
+                    <span>Stalled / Lost</span>
+                    <h2>{{ lost }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon orange">
+                    ↗
+                </div>
+
+                <div>
+                    <span>Follow Ups</span>
+                    <h2>{{ followups }}</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    ✓
+                </div>
+
+                <div>
+                    <span>Converted</span>
+                    <h2>{{ recovered }}</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= LEARNING PIPELINE ================= -->
+
+        <section class="section" id="recovery">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Sales Learning Pipeline
+                    </h2>
+
+                    <p>
+                        Track leads and build organizational sales knowledge.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pipeline">
+
+                <div class="pipeline-step">
+
+                    <div class="step-number red-bg">
+                        1
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Stalled / Lost
+                        </h3>
+
+                        <p>
+                            Leads that stopped engaging
+                        </p>
+
+                    </div>
+
+                    <strong>
+                        {{ lost }}
+                    </strong>
+
+                </div>
+
+
+                <div class="arrow">
+                    →
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="step-number orange-bg">
+                        2
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Follow Up
+                        </h3>
+
+                        <p>
+                            Leads being contacted
+                        </p>
+
+                    </div>
+
+                    <strong>
+                        {{ followups }}
+                    </strong>
+
+                </div>
+
+
+                <div class="arrow">
+                    →
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="step-number green-bg">
+                        3
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Converted
+                        </h3>
+
+                        <p>
+                            Successful sales outcomes
+                        </p>
+
+                    </div>
+
+                    <strong>
+                        {{ recovered }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ADD LEAD ================= -->
+
+        <section class="section" id="add">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        Add Lead
+                    </h2>
+
+                    <p>
+                        Record information that RE:LEAD can learn from.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form action="/add" method="POST" class="customer-form">
+
+                <div class="form-group">
+
+                    <label>
+                        Lead Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter lead name"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Company / Business
+                    </label>
+
+                    <input
+                        type="text"
+                        name="company"
+                        placeholder="Example: FitZone Gym">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        placeholder="Enter phone number"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Service / Product
+                    </label>
+
+                    <input
+                        type="text"
+                        name="service"
+                        placeholder="Example: Website + Booking System">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Requirement
+                    </label>
+
+                    <input
+                        type="text"
+                        name="requirement"
+                        placeholder="What does the lead need?">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Budget
+                    </label>
+
+                    <input
+                        type="text"
+                        name="budget"
+                        placeholder="Example: ₹20,000">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Main Reason / Objection
+                    </label>
+
+                    <select name="reason">
+
+                        <option value="Price">
+                            Price
+                        </option>
+
+                        <option value="Competitor">
+                            Competitor
+                        </option>
+
+                        <option value="Not Interested">
+                            Not Interested
+                        </option>
+
+                        <option value="No Response">
+                            No Response
+                        </option>
+
+                        <option value="Poor Experience">
+                            Poor Experience
+                        </option>
+
+                        <option value="Timing">
+                            Timing
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Specific Objection
+                    </label>
+
+                    <input
+                        type="text"
+                        name="objection"
+                        placeholder="Example: Your price is too high">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Priority
+                    </label>
+
+                    <select name="priority">
+
+                        <option value="High">
+                            High
+                        </option>
+
+                        <option value="Medium" selected>
+                            Medium
+                        </option>
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Conversation Notes
+                    </label>
+
+                    <input
+                        type="text"
+                        name="notes"
+                        placeholder="Important details from previous conversation">
+
+                </div>
+
+
+                <div class="form-submit">
+
+                    <button
+                        type="submit"
+                        class="primary-btn">
+
+                        + Add Lead
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- ================= LEAD TABLE ================= -->
+
+        <section class="section" id="customers">
+
+            <div class="section-title customer-heading">
+
+                <div>
+
+                    <h2>
+                        Lead Memory
+                    </h2>
+
+                    <p>
+                        Past sales experiences stored for RE:LEAD.
+                    </p>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    🔍
+
+                    <input
+                        type="text"
+                        id="search"
+                        placeholder="Search leads...">
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Lead
+                            </th>
+
+                            <th>
+                                Company
+                            </th>
+
+                            <th>
+                                Service
+                            </th>
+
+                            <th>
+                                Budget
+                            </th>
+
+                            <th>
+                                Objection
+                            </th>
+
+                            <th>
+                                Priority
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="customerTable">
+
+                    {% for customer in customers %}
+
+                        <tr>
+
+                            <!-- LEAD -->
+
+                            <td>
+
+                                <div class="customer-info">
+
+                                    <div class="avatar">
+
+                                        {{ customer['name'][0].upper() }}
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <!-- CLICKABLE LEAD NAME -->
+
+                                        <a
+                                            href="/lead/{{ customer['id'] }}"
+                                            class="lead-name-link">
+
+                                            <strong>
+                                                {{ customer['name'] }}
+                                            </strong>
+
+                                        </a>
+
+                                        <small>
+                                            {{ customer['phone'] }}
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- COMPANY -->
+
+                            <td>
+                                {{ customer['company'] or '-' }}
+                            </td>
+
+
+                            <!-- SERVICE -->
+
+                            <td>
+                                {{ customer['service'] or '-' }}
+                            </td>
+
+
+                            <!-- BUDGET -->
+
+                            <td>
+                                {{ customer['budget'] or '-' }}
+                            </td>
+
+
+                            <!-- OBJECTION -->
+
+                            <td>
+                                {{ customer['objection'] or customer['reason'] or '-' }}
+                            </td>
+
+
+                            <!-- PRIORITY -->
+
+                            <td>
+
+                                <span class="badge
+
+                                    {% if customer['priority'] == 'High' %}
+                                        priority-high
+
+                                    {% elif customer['priority'] == 'Low' %}
+                                        priority-low
+
+                                    {% else %}
+                                        priority-medium
+                                    {% endif %}
+
+                                ">
+
+                                    {{ customer['priority'] }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                <span class="badge status-{{ customer['status'].replace(' ', '-').lower() }}">
+
+                                    {{ customer['status'] }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <!-- OPEN LEAD -->
+
+                                <a
+                                    href="/lead/{{ customer['id'] }}"
+                                    class="view-lead">
+
+                                    View
+
+                                </a>
+
+
+                                {% if customer['status'] == 'Lost' %}
+
+                                    <a
+                                        class="action-btn follow"
+                                        href="/status/{{ customer['id'] }}/Follow%20Up">
+
+                                        Follow Up
+
+                                    </a>
+
+                                {% elif customer['status'] == 'Follow Up' %}
+
+                                    <a
+                                        class="action-btn recover"
+                                        href="/status/{{ customer['id'] }}/Recovered">
+
+                                        Convert
+
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="done">
+                                        ✓ Converted
+                                    </span>
+
+                                {% endif %}
+
+
+                                <a
+                                    class="delete-btn"
+                                    href="/delete/{{ customer['id'] }}"
+                                    onclick="return confirm('Delete this lead?')">
+
+                                    ×
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="8">
+
+                                <div class="empty">
+
+                                    <div class="empty-icon">
+                                        🧠
+                                    </div>
+
+                                    <h3>
+                                        No leads yet
+                                    </h3>
+
+                                    <p>
+                                        Add your first lead to start building RE:LEAD's sales memory.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MEMORY FLOW ================= -->
+
+        <section class="section">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>
+                        🧠 RE:LEAD Memory
+                    </h2>
+
+                    <p>
+                        How RE:LEAD learns from sales history.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pipeline">
+
+                <div class="pipeline-step">
+
+                    <div class="step-number purple">
+                        1
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Remember
+                        </h3>
+
+                        <p>
+                            Store lead conversations and outcomes.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="arrow">
+                    →
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="step-number orange-bg">
+                        2
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Learn
+                        </h3>
+
+                        <p>
+                            Find patterns in previous sales.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="arrow">
+                    →
+                </div>
+
+
+                <div class="pipeline-step">
+
+                    <div class="step-number green-bg">
+                        3
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Recommend
+                        </h3>
+
+                        <p>
+                            Suggest the next action.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <strong>
+                RE:LEAD
+            </strong>
+
+            — Sales Memory & Learning Agent
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- ================= SEARCH ================= -->
+
+<script>
+
+const search = document.getElementById("search");
+
+search.addEventListener("keyup", function () {
+
+    const value = this.value.toLowerCase();
+
+    const rows = document.querySelectorAll(
+        "#customerTable tr"
+    );
+
+    rows.forEach(row => {
+
+        const text = row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(value)
+                ? ""
+                : "none";
+
+    });
+
+});
+
+</script>
+
+</body>
+
+</html>

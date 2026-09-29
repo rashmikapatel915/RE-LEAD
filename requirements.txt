@@ -1,0 +1,50 @@
+# RE:LEAD — Sales Memory & Learning Agent
+
+## Problem
+Sales teams often lose valuable knowledge from previous customer interactions.
+When a similar lead appears later, the team may repeat the same mistakes.
+
+## Solution
+RE:LEAD is an AI sales memory agent that remembers previous sales interactions,
+recalls similar historical experiences, and uses them to recommend the next action.
+
+## How Hindsight Is Used
+
+Hindsight is the memory layer of RE:LEAD.
+
+1. Sales interactions are retained as memories.
+2. When a new/stalled lead is analyzed, RE:LEAD recalls relevant past experiences.
+3. The retrieved memories are shown to the sales representative.
+4. These historical experiences help guide the recommended next action.
+
+## Core Workflow
+
+New Lead
+↓
+Customer Information
+↓
+Hindsight Memory
+↓
+Recall Similar Sales Experiences
+↓
+Recommendation
+↓
+Sales Outcome
+↓
+New Memory
+
+## Technology
+
+- Python
+- Flask
+- SQLite
+- Hindsight by Vectorize
+- HTML
+- CSS
+- JavaScript
+
+## Key Value
+
+RE:LEAD helps organizations avoid repeating the same sales mistakes
+by turning previous sales experiences into reusable organizational memory.Flask
+hindsight-client
